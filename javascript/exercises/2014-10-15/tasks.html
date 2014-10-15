@@ -1,0 +1,112 @@
+<html>
+  <head></head>
+  <body>
+
+  <p>Open the console.</p>
+  <a href="https://github.com/FMIjs/js-lectures-2014/tree/master/tasks/01">https://github.com/FMIjs/js-lectures-2014/tree/master/tasks/01</a>
+
+  <script type="text/javascript">
+
+    function fib(n) {
+      if (n === 0) {
+        return 1;
+      }
+      else if (n === 1) {
+        return 1;
+      }
+      else if (n === Infinity) {
+        return n;
+      }
+      else {
+        var first = 1;
+        var second = 1;
+        var current = 1;
+
+        for (var i=3; i<=n; i++) {
+          current = first + second;
+          first = second;
+          second = current;
+        }
+        return current;
+      }
+
+    }
+
+    function phiEstimation(n) {
+      if (n === Infinity)
+        return "φ";
+
+      var piN = fib(n);
+      var piN2 = fib(n-1);
+
+      return piN2 / piN;
+    }
+
+    function reverseWordsOrderInString(input) {
+      var words = input.split(' ');
+      var reversed = words.reverse().toString();
+
+      return reversed.replace(/,/g, ' ');
+    }
+
+    function reverseWordsInString(input) {
+      var words = input.split(' ');
+      var reversed = '';
+      words.forEach(function(word, index) {
+        if (index > 0)
+          reversed += ' ';
+        reversed += reverseString(word);
+      });
+
+      return reversed;
+    }
+
+    function reverseString(string) {
+      var output = '';
+      for (var i = string.length - 1; i >= 0; i--) {
+        output += string.charAt(i);
+      }
+
+      return output;
+    }
+
+    function findNthNumber(n, arr) {
+      var sorted = arr.sort(compareByNumber).reverse();
+      var uniqe = filterUniqe(sorted);
+
+      return sorted[n+1];
+    }
+    function compareByNumber(a, b) {
+      if (a > b)
+        return 1;
+      else if (a < b)
+        return -1;
+      else
+        return 0;
+    }
+    function filterUniqe(array) {
+      var result = [];
+      array.forEach(function(item) {
+        if (result.indexOf(item) === -1)
+          result.push(item);
+      });
+
+      return result;
+    }
+
+    function mean(arr) {
+      var sorted = arr.sort(compareByNumber);
+      var bits = sorted.length.toString(2);
+
+      if (bits.charAt(bits.length-1) === '0') {
+        return (sorted[Math.floor(sorted.length/2)-1] + sorted[Math.floor(sorted.length/2)]) / 2;
+      }
+      else {
+        return sorted[Math.floor(sorted.length/2)];
+      }
+    }
+
+  </script>
+
+  </body>
+</html>
