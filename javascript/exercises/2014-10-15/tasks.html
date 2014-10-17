@@ -71,10 +71,10 @@
     }
 
     function findNthNumber(n, arr) {
-      var sorted = arr.sort(compareByNumber).reverse();
-      var uniqe = filterUniqe(sorted);
+      var uniqe = filterUniqe(arr);
+      var sorted = uniqe.sort(compareByNumber).reverse();
 
-      return sorted[n+1];
+      return sorted[n-1];
     }
     function compareByNumber(a, b) {
       if (a > b)
