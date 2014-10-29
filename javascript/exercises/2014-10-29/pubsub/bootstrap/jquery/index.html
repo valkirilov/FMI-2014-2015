@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script src="src/pubsub.js"></script>
+
+  <script type="text/javascript">
+
+  var callback1 = function() {
+  	console.log('Callback 1');
+  };
+  var callback2 = function() {
+  	console.log('Callback 2');
+  };
+  var callback3 = function() {
+  	console.log('Callback 3');
+  };
+
+
+  pubsub.subscribe('event1', callback1);
+  pubsub.subscribe('event1', callback2);
+  pubsub.subscribe('event2', callback3);
+
+
+  </script>>
+</body>
+</html>
