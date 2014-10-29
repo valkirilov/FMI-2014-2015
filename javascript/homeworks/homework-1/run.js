@@ -52,3 +52,10 @@ var module = require('./tasks.js');
 //
 // meanArray = [];
 // console.log('mean('+meanArray.toString()+'): ' + module.mean(meanArray));
+
+/* Tst cases for setBits */
+var m = 130,
+    n = 26,
+    i = 2,
+    j = 5;
+console.log('setBits(m, n, i, j): ' + module.setBits(m, n, i, j));
