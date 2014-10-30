@@ -1,0 +1,23 @@
+﻿book1 = {
+	author: "Kristina Chodorow",
+	title: "MongoDB: The Defitive Guide",
+	pages: 410,
+	tags: ["programming", "databases"],
+	copiesInStock: {
+		Sofia : 10, Plovdiv : 7, Varna : 0
+	},
+	publisher : "O'Reilly Media",
+	publishDate: new Date('Aug 23, 2012')
+}
+
+book2 = {
+	author: ["Eelco Plugge", "Peter Membrey", "Tim Hawkins"],
+	title: "The Defitive Guide to MongoDB: The NoSQL Database for Cloud and Desktop Computing",
+	pages: 329,
+	tags: ["programming", "databases"],
+	copiesInStock: {
+		Sofia : 18, Burgas : 13, Varna : 11
+	},
+	publisher: "Apress",
+	publishDate: new Date('Jul 15, 2010')
+}

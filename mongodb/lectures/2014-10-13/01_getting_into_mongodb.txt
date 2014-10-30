@@ -1,0 +1,104 @@
+#1. Стартиране на mongo сървър и mongo shell
+// команда mongod - MongoDB сървър
+	mongod //стартира сървър, който съхранява данните на базата в папка /data/db и работи на порт 27017
+	mongod --dbpath=/some/other/path -port 22222 //стартира сървър с папка /some/other/path и работи на порт 22222
+	
+// команда mongo - стартира MongoDB shell
+	mongo //стартира mongo shell, който се свързва към сървър работещ на локалната машина и на порт 27017
+	mongo localhost:27017 //прави същото като mongo без параметри
+	mongo machine_at.remote_network.com:34343 //стартира mongo shell, който се свърза към сървър работещ на машина достъпна на machine_at.remote_network.com на порт 34343
+	
+// В shell-a можете да изпълнявате JavaScript код:
+var a = 5;
+var b = 10;
+a + b;
+
+// Можете да използвате следните JavaScipt обекти за тестване:
+
+book1 = {
+	author: "Kristina Chodorow",
+	title: "MongoDB: The Defitive Guide",
+	pages: 410,
+	tags: ["programming", "databases"],
+	copiesInStock: {
+		Sofia : 10, Plovdiv : 7, Varna : 0
+	},
+	publisher : "O'Reilly Media",
+	publishDate: new Date('Aug 23, 2012')
+}
+
+book2 = {
+	author: ["Eelco Plugge", "Peter Membrey", "Tim Hawkins"],
+	title: "The Defitive Guide to MongoDB: The NoSQL Database for Cloud and Desktop Computing",
+	pages: 329,
+	tags: ["programming", "databases"],
+	copiesInStock: {
+		Sofia : 18, Burgas : 13, Varna : 11
+	},
+	publisher: "Apress",
+	publishDate: new Date('Jul 15, 2010')
+}
+
+// Текущата база от данни се пази в променливата db.
+// Можете да смените използваната база с помощта на командата use.
+// Можете да видите всички бази от данни/колекции с командата show.
+db
+use test
+show dbs
+show collections
+
+//добавянето на нова база данни става като се добави колекция с документи
+use humongous // сменя базата към все още несъществуващата база humongous
+
+// Добавянето на документи в колекция става с фунцкията insert,
+// който приема JS обект или масив като първи аргумент.
+// Можете да видите добавения документ с функциите find и findOne
+db.books.insert(book1) //добавя обекта book1 като документ в досега несъществуващата колекция books. При създаването на колекцията books автоматично се създава и базата humongous
+
+db.books.insert([book1, book2]) //добавя обектите book1 и book2 като документи в колекцията
+
+db.books.find() // връща всички документи в колекцията
+db.books.find().pretty() // връща всички документи в колекцията, форматирани в приличен вид
+
+db.books.findOne() // връща един документ от колекцията
+
+// Обновяването на документи става с функцията update.
+// Първият аргумент задава критерий за търсене, а вторият - новия документ. Старият документ се презаписва изцяло!
+// По подразбиране се обновява само първият намерен резултат!
+book1.price = 9.99
+
+db.books.update({"title": "MongoDB: The Definitive Guide"}, book1)
+db.books.find()
+
+db.books.update({"title": "MongoDB: The Definitive Guide"}, book1, {multi:true}) // обновява всички документи, които отговарят на условието на заявката като ги заменя с book1
+
+db.books.update({"title": "MongoDB: The Definitive Guide"}, book1, {upsert:true}) // ако не намери документ, отговарящ на условиет, създава нов документ
+
+// Ако искаме да обновим, само един ключ от документа,
+// можем да използваме модификатора $set.
+db.books.update({"title": "NoSQL Distilled"}, {"$set": {"price": 9.99}})
+
+// По подобен начин можем да увеличаваме/намаляме числени стойности -
+// за целта използваме модификатора inc.
+db.books.update({"title": "NoSQL Distilled"}, {"$inc": {"price": -1})
+
+// MongoDB поддържа така наречените upserts, които обновяват даден запис,
+// ако той съществува или създават нов в противен случай. За целта трябва
+// да подадем трети параметър true.
+db.reports.update({"tag": "databases"}, {"$inc": {"booksSold": 1}}, true)
+
+// Премахването на документи става с функцията remove.
+db.books.remove({"title": "MongoDB: The Definitive Guide"})
+
+// Изтриването на колекции става с функцията drop.
+db.books.drop()
+
+//ObjectId
+getTimestamp()
+
+// MongoDB има доста добра помощна документация, която можете да видите с функцията help.
+// Ако извикате някоя функция без скоби, ще видите кода й.
+help
+db.help()
+db.books.help()
+db.books.update // без скоби
