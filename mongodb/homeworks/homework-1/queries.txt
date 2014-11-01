@@ -1,0 +1,77 @@
+
+// Creating albums document
+album1 = {  
+    "name": "Speaking in Tongues", 
+    "artist": "Talking Heads", 
+    "released": 1983, 
+    "genres": ["new wave"] 
+} 
+
+artist1 = { 
+"name": "Talking Heads", 
+"founded": 1975 
+} 
+
+
+db.albums.insert(album1)
+db.artists.insert(artist1);
+
+1. Въведете поне 4 албума и 3 изпълнителя
+db.albums.insert([ {
+    "name": "Novite Varvari", 
+    "artist": "Slavi Trifonov", 
+    "released": 2000, 
+    "genres": ["pop", "rock"] 
+}, {
+    "name": "Hits of 2010", 
+    "artist": "Panayot Panayotov", 
+    "released": 2003, 
+    "genres": ["jazz", "rock"] 
+}, {
+    "name": "Abba hits", 
+    "artist": "ABBA", 
+    "released": 1965, 
+    "genres": ["rege", "country"] 
+}, {
+    "name": "Prosto title", 
+    "artist": "Pass", 
+    "released": 2011, 
+    "genres": ["pop", "dance"] 
+}, {
+    "name": "Azbuchno zaglavie", 
+    "artist": "Panayot Panayotov", 
+    "released": 2004, 
+    "genres": ["classic"] 
+}, {
+    "name": "Z zaglavie", 
+    "artist": "Panayot Panayotov", 
+    "released": 2008, 
+    "genres": ["classic"] 
+}]);
+
+db.authors.insert([{
+    "name": "Slavi Trifonov",
+    "founded": 1980
+}, {
+    "name": "Panayot Panayotov",
+    "founded": 1995
+}, {
+    "name": "ABBA",
+    "founded": 1950
+}])
+
+2.  Променете всички албуми на Panayot Panayotov като им добавите поле "favorite" със стойност true и “pop” в списъка със жанрове
+db.albums.update({ "artist": "Panayot Panayotov"}, { "$set": { "favorite": "true" } }, { "$push" : { "genres": "rock"}})
+
+3. Намерете всички изпълнители, създадени между 2001 и 2011, сортирани в обратен (Z­>A) ред по име. 
+db.albums.find({ "$and": [ {"released": { "$gt": 2001}}, {"released" : { "$lt": 2011}}] }).sort({"name":-1});
+
+4. Изберете си един изпълнител. Намерете броя на албумите с жанр “rock”, които той има. 
+db.albums.find({ "artist": "Panayot Panayotov", 'genres': { "$in" : ["rock"]}}).count()
+
+5. Изтрийте всички албуми, които съдържат “hits” в името си, независимо дали е с малки или големи букви.
+db.albums.remove({ "name": /hits/i});
+
+
+
+
