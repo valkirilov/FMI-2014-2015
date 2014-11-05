@@ -13,8 +13,7 @@ module.exports = function(grunt) {
             style: 'compressed'
           },
           files: {
-            'app/css/app.css': 'app/css/sass/app.scss',
-            // 'app/css/base.css': 'app/css/scss/base.scss',
+            'app/styles/app.css': 'app/styles/scss/app.scss',
           }
         }
       },
