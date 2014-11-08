@@ -14,14 +14,15 @@ module.exports = function(config){
     autoWatch : true,
 
     frameworks: ['jasmine'],
-
+    reporters: ['html'],
     browsers : ['Chrome'],
 
     plugins : [
             'karma-chrome-launcher',
             'karma-firefox-launcher',
             'karma-jasmine',
-            'karma-junit-reporter'
+            'karma-junit-reporter',
+            'karma-jasmine-html-reporter-livereload'
             ],
 
     junitReporter : {

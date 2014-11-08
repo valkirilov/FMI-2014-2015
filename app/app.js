@@ -24,9 +24,8 @@ config(['$routeProvider', function($routeProvider) {
   $scope.lang = "en";
 
   $scope.setLanguage = function(language) {
-      alert('Setting ' + language);
-      $scope.lang = language;
-      gettextCatalog.currentLanguage = language;
+    $scope.lang = language;
+    gettextCatalog.currentLanguage = language;
   };
 
 }]);
