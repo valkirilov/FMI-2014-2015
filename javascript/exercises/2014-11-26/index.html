@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>DOM</title>
+</head>
+<body>
+
+	<h1>Heading 1</h1>
+	<h2>Heading 2</h2>
+
+	<div id="id-test">Div 1</div>
+	<div>Div 2</div>
+
+	<div class="class-test">
+		<ul>
+			<li>li 1</li>
+			<li class="class-test">li 2</li>
+			<li>li 3</li>
+		</ul>
+	</div>
+
+	<div>
+		<h2>
+			<ul>
+				<li>li 1</li>
+				<li class="class-test">li 2</li>
+				<li>li 3</li>
+			</ul>
+		</h2>
+	</div>
+
+
+	<script type="text/javascript">
+
+		var G = (function() {
+
+			function dfs(root, elements) {
+				var children = root.children;
+				
+				for (var childIndex = 0; childIndex < children.length; childIndex++) {
+					var child = children[childIndex];
+					elements.push(child);
+					
+					dfs(child, elements);
+				}
+
+			}
+
+			var getElementById = function(root, selector) {
+				var elements = [];
+				dfs(root, elements);
+
+				var results = elements.filter(function(item) {
+					return item.id === selector;
+				});
+
+				return results;
+			};
+
+			var getElementsByTagName = function(root, selector) {
+				var elements = [];
+				dfs(root, elements);
+
+				var results = elements.filter(function(item) {
+					return item.tagName === selector.toUpperCase();
+				});
+
+				return results;
+			};
+
+			var getElementsByClassName = function(root, selector) {
+				var elements = [];
+				dfs(root, elements);
+
+				var results = elements.filter(function(item) {
+					return item.className.indexOf(selector) > -1;
+				});
+
+				return results;
+			};
+
+			var getAllElements = function(root) {
+				var elements = [];
+				dfs(root, elements);
+
+				return elements;
+			};
+
+			var collectionToArray = function(collection) {
+				var results = [];
+				for (var i=0; i<collection.length; i++) {
+					results.push(collection[i]);
+				}
+				return results;
+			};
+
+			var splitSelectorsToTokens = function(selector) {
+				var tokens = [];
+
+				var currentSelectorValue = '',
+					currentSelectorType;
+				for (var i = 0; i < selector.length; i++) {
+					var currentChar = selector[i];
+
+					switch(currentChar) {
+						case '#': 
+						case '.':
+							if (!currentSelectorType) {
+								currentSelectorType = currentChar;
+								break;
+							}
+
+							tokens.push({
+								value: currentSelectorValue,
+								type: currentSelectorType
+							});
+
+							currentSelectorType = currentChar;
+							currentSelectorValue = '';
+							break;
+						case ' ':
+							if (!currentSelectorType) {
+								currentSelectorType = 'tag';
+							}
+
+							tokens.push({
+								value: currentSelectorValue,
+								type: currentSelectorType
+							});
+
+							currentSelectorType = undefined;
+							currentSelectorValue = '';
+							break;
+
+						case '>':
+							if (!currentSelectorType) {
+								currentSelectorType = 'tag';
+							}
+
+							tokens.push({
+								value: currentSelectorValue,
+								type: currentSelectorType
+							});
+
+							currentSelectorType = currentChar;
+							currentSelectorValue = '';
+							break;
+
+						default: 
+							currentSelectorValue += currentChar;
+							break;
+					}
+				}
+
+				if (!currentSelectorType)
+					currentSelectorType = 'tag';
+
+				tokens.push({
+					value: currentSelectorValue,
+					type: currentSelectorType
+				});
+
+				return tokens;
+			};
+
+			var querySelector = function(selector) {
+				var root, latestParent,
+					elements = [ document ],
+					selectors = splitSelectorsToTokens(selector);
+
+				//console.log(selectors);
+				selectors.forEach(function(selector) {
+					//console.log("Current token: " + selector.type + " " + selector.value);
+
+					var	returnedElements = [];
+
+					for (var elementIndex=0; elementIndex < elements.length; elementIndex++) {
+						var currentSelectorResultd = [],
+							root = elements.pop();
+
+						//console.log('Current root:');
+						//console.log(root);
+						
+						switch(selector.type) {
+							case '#':
+								currentSelectorResultd = [];
+								currentSelectorResultd.push(root.getElementById(selector.value));
+								break;
+							case '.':
+								currentSelectorResultd = root.getElementsByClassName(selector.value);
+								currentSelectorResultd = collectionToArray(currentSelectorResultd);
+								break;
+							case 'tag':
+								currentSelectorResultd = root.getElementsByTagName(selector.value);
+								currentSelectorResultd = collectionToArray(currentSelectorResultd);
+								break;
+							case '>':
+								currentSelectorResultd = root.getElementsByTagName(selector.value);
+								currentSelectorResultd = collectionToArray(currentSelectorResultd);
+
+
+								currentSelectorResultd = currentSelectorResultd.filter(function(item) {
+									return item.parentElement === root;
+								});
+
+								break;
+							case '*':
+								currentSelectorResultd = root;
+								break;
+							default: console.log('Default case'); break;
+						}
+
+						returnedElements = returnedElements.concat(currentSelectorResultd);
+						//console.log('Current returnedElements:');
+						//console.log(returnedElements);
+					}
+					latestParent = root;
+					elements = returnedElements;
+					//console.log('All elements:');
+					//console.log(elements);
+				});
+
+				return elements;
+			};
+
+			return {
+				getElementById: getElementById,
+				getElementsByTagName: getElementsByTagName,
+				getElementsByClassName: getElementsByClassName,
+				querySelector: querySelector
+			};
+
+		})();
+
+		var idTest = G.getElementById(document.body, 'id-test');
+		var tagTest = G.getElementsByTagName(document.body, 'li');
+		var classTest = G.getElementsByClassName(document.body, 'class-test');
+		
+		var querySelectorIdTest = G.querySelector('#id-test');
+		var querySelectorTagsTest = G.querySelector('li');
+		var querySelectorClassTest = G.querySelector('.class-test');
+		var querySelectorParentChildrenTest = G.querySelector('div ul');
+		var querySelectorParentChildrenDirectTest = G.querySelector('div>ul');
+		var querySelectorParentChildrenDirectTest2 = G.querySelector('div>li');
+		var querySelectorAllTest = G.querySelector('*');
+
+		// console.log('Normal selectors');
+		// console.log(idTest);
+		// console.log(tagTest);
+		// console.log(classTest);
+		console.log('');
+		console.log('-------------------');
+		console.log('');
+
+		console.log('Query selectors');
+		console.log(querySelectorIdTest);
+		console.log(querySelectorTagsTest);
+		console.log(querySelectorClassTest);
+		console.log(querySelectorParentChildrenTest);
+		console.log(querySelectorParentChildrenDirectTest);
+		console.log(querySelectorParentChildrenDirectTest2);
+		console.log(querySelectorAllTest);
+
+	</script>
+
+</body>
+</html>
