@@ -1,0 +1,39 @@
+
+body {
+
+}
+
+#table-maze {
+	background: #cccccc;
+}
+
+tr {
+	margin: 0;
+}
+
+td {
+	width: 30px;
+	height: 30px;
+	margin: 0;
+	border: 1px solid #cccccc;
+	text-align: center;
+
+	cursor: pointer;
+}
+
+tr.hovered {
+	background: red;
+}
+
+.brick-wall {
+	background: black;
+}
+.brick-empty {
+	background: #aaaaaa;
+}
+.brick-visited {
+	background: #666666;
+}
+.brick-finish {
+	background: pink;
+}
