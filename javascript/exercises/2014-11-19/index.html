@@ -1,0 +1,47 @@
+<<!DOCTYPE html>
+<html>
+<head>
+	<title>DOM</title>
+</head>
+<body>
+
+	<h1>Heading 1</h1>
+	<h2>Heading 2</h2>
+
+	<div id="id-test">Div 1</div>
+	<div>Div 2</div>
+
+	<div>
+		<h2>
+			<ul>
+				<li>li 1</li>
+				<li>li 2</li>
+				<li>li 3</li>
+			</ul>
+		</h2>
+	</div>
+
+
+	<script type="text/javascript">
+
+		var G = (function() {
+
+			var getElementById = function(root, selector) {
+				console.log(root);
+				console.log(selector);
+				
+
+			};
+
+			return {
+				getElementById: getElementById
+			};
+
+		})();
+
+		G.getElementById(document, 'id-test');
+
+	</script>>
+
+</body>
+</html>

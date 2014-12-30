@@ -42,6 +42,7 @@ angular.module('myApp.services.strings-generator-service', ['restangular',])
     return names;
   };
   
+  this.getRandom = getRandom;
   this.getAlbumName = getAlbumName;
   this.getArtistName = getArtistName;
   this.getReleased = getReleased;

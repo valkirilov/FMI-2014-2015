@@ -48,6 +48,7 @@
       <th>Изпълнител</th>
       <th>Издаден</th>
       <th>Жанр</th>
+      <th>Рейтинг</th>
     </tr>
     <tr ng-repeat="album in albums" class="{{ album.favorite === true ? 'success' : '' }}">
       <td class="text-left">{{ $index }}</td>
@@ -55,6 +56,7 @@
       <td class="text-left">{{ album.artist }} </td>
       <td class="text-left">{{ album.released }} год.</td>
       <td class="text-left">{{ album.genres }}</td>
+      <td class="text-left">{{ album.rating }}</td>
     </tr>
   </table>
 </div>

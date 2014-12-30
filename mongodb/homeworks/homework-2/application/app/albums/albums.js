@@ -106,6 +106,7 @@ angular.module('myApp.albums', ['ngRoute', 'restangular', 'myApp.services'])
         album.artist = $scope.artists[UtilsService.getRandom($scope.artists.length-1)].name;
         album.released = StringsGeneratorService.getReleased();
         album.genres = StringsGeneratorService.getGenresNames();
+        album.rating = StringsGeneratorService.getRandom(10);
       }
 
       album.genres = album.genres.replace(/(, )/g, '').split(',');
