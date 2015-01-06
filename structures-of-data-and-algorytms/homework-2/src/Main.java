@@ -8,7 +8,6 @@ public class Main {
 		String bookFilePath = "test/test1/input.txt";
 		String indexFilePath = "test/test1/output.txt";
 		
-		
 		bookIndexer.buildIndex(bookFilePath, keywords, indexFilePath);
 		
 	}
