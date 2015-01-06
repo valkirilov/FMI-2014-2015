@@ -3,9 +3,16 @@ import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 /**
  * 
@@ -82,11 +89,13 @@ public class BookIndexer61701 implements IBookIndexer {
 		PrintWriter writer = null;
 		try {
 			writer = new PrintWriter(filename, "UTF-8");
-			writer.println("INDEX");
+			writer.print("INDEX");
 			
+			Map<String, KeywordIndexer> treeMap = new TreeMap<String, KeywordIndexer>(keywordsMap);
 			// Write results
-			for (KeywordIndexer keyword: keywordsMap.values()) {
-				writer.println(keyword.getIndex());
+			for (KeywordIndexer keyword: treeMap.values()) {
+				writer.println();
+				writer.print(keyword.getIndex());
 			}
 			
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
@@ -125,42 +134,50 @@ class KeywordIndexer {
 		Integer lastPage = -1;
 		boolean pagesSeries = false;
 		
-		System.out.println("");
-		System.out.println("=================");
-		System.out.println(keyword);
-		
-		for (Integer pageNumber: found) {
+		Integer pageNumber = -1;
+		for (int counter=0; counter <= found.size(); counter++) {
+			if (counter != found.size()) {
+				pageNumber = found.get(counter);
+			}
+			else {
+				//pageNumber = 0;
+			}
 			
-			System.out.println("first: " + firstPage + " last:" + lastPage + " current: " + pageNumber + " series: " + pagesSeries);
-			
-			if (pagesSeries && pageNumber-1 == lastPage) {
-				System.out.println("Series continue");
+			//System.out.println("current: " + pageNumber + " last:" + lastPage + " series: " + pagesSeries + " first: " + firstPage);
+			if (!pagesSeries && lastPage != pageNumber-1) {
+				if (lastPage != -1) {
+					//System.out.println("No series. Writing " + lastPage);
+					result += lastPage + ", ";
+				}
 				lastPage = pageNumber;
 			}
-			else if (pagesSeries && pageNumber-1 != lastPage) {
-				System.out.println("Series end");
-				pagesSeries = false;
-				result += firstPage + "-" + lastPage + ", ";
-			}
-			else if (!pagesSeries && pageNumber-1 == lastPage) {
-				System.out.println("Series start");
+			else if (!pagesSeries && lastPage == pageNumber-1) {
+				//System.out.println("Start series. First " + lastPage);
+				firstPage = lastPage;
 				lastPage = pageNumber;
-				firstPage = pageNumber;
 				pagesSeries = true;
 			}
-			else if (!pagesSeries && pageNumber-1 != lastPage) {
+			else if (pagesSeries && lastPage != pageNumber-1) {
+				//System.out.println("End series. Writing First " + firstPage + " Last " + lastPage);
+				result += firstPage + "-" + lastPage + ", ";
+				firstPage = -1;
 				lastPage = pageNumber;
-				System.out.println("No series");
-				result += pageNumber + ", ";
+				pagesSeries = false;
+			}
+			else if (pagesSeries && lastPage == pageNumber-1) {
+				//System.out.println("Continue series. Writing First " + firstPage + " Last " + pageNumber);
+				lastPage = pageNumber;
+				pagesSeries = true;
 			}
 			
 		}
-		System.out.println("");
+		
 		// Remove the last , 
 		result = result.replaceAll("(, $)", "");
 		
-		System.out.println(result);
+		//System.out.println(result);
 		return result;
 	}
+
 	
 }
