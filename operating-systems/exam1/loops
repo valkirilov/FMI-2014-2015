@@ -1,0 +1,32 @@
+#!/bin/bash
+
+###1. Използва for цикъл, за да изведе числата от 1 до 100
+
+#for i in {1..100}; do
+#  echo $i
+#done
+
+
+###2. Използва while цикъл, за да изведе числата то 3 до 7
+
+#counter=3
+#while [ $counter -le 7 ]; do
+#  echo $counter;
+#  let counter=$counter+1
+#done
+
+###3. Използва until, за да изведе числата от 8 до 4
+
+#counter=8
+
+#until [ $counter -lt 4 ]; do
+#  echo $counter
+#  counter=$(($counter-1))
+#done
+
+###4. Използвайки цикъл, изведете на екрана имената на всички файлове от текущата директория, последвано от съобщение с броя им.
+
+for file in $(ls); do
+  echo $file
+done
+echo $(ls | wc -w)

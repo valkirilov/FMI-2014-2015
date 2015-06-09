@@ -1,0 +1,52 @@
+#!/bin/bash
+
+###1. Приема 4 параметъра и ги извежда в обратен ред.
+
+#echo $4 $3 $2 $1
+
+###2. Приема 2 параметъра (имена на файлове) и извежда дали те съществуват.
+#file1=$1
+#file2=$2
+
+#if [ -f $file1 ]; then
+#  echo "$file1 exist"
+#else
+#  echo "$file1 doesnt exist"
+#fi
+
+###3. Въвежда име на файл. Проверява дали файлът съществува, дали сте собственик (owner) на файла и дали в него може да се пише (writable). Ако не е, го прави writable.
+
+#read filename
+
+#if [ -f $filename -a -O $filename -a -w $filename ]; then
+#  echo "true"
+#  chmod +w $filename
+#else
+#  echo "false"
+#fi
+
+###4. Въвежда 2 числа и извежда сумата и произведението им. 
+###Enter a number: 5
+###Enter second number: 2
+###Sum: 5 + 2 = 7
+###Product: 5 x 2 = 10
+
+echo "Enter a number: "
+read number1
+
+echo "Enter a second number:"
+read number2
+
+sum=$(($number1+$number2))
+product=$(($number1*$number2))
+
+echo "Sum $number1 + $number2 = $(($number1+$number2))"
+echo "Product $number1 * $number2 = $(($number1*$number2))"
+
+if [ $sum -eq $product ]; then
+  echo "Congratulations"
+fi
+
+###5. Подобрете предишния скрипт като напишете Congratulations ако сумата е равна на произведението.
+
+

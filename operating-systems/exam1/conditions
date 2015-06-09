@@ -1,0 +1,77 @@
+#!/bin/bash
+
+### taks 1
+#if [ 1 -eq 2 ]; then
+#  echo "1 = 2"
+#elif [ 1 -eq 1 ]; then
+#  echo "Equals"
+#else
+#  echo "Different"
+#fi
+
+### task2
+#if who | grep valentin; then
+#  echo "Hello, you are logged in"
+#else
+#  echo "Bye"
+#fi
+
+### task 3
+#until who | grep -q $1; do
+#  sleep 10
+#done
+
+#echo "$1 is logged in"
+
+### task4
+#counter=5;
+#while [ $counter -gt 0 ]; do
+#  echo "$counter"
+#  counter=$((counter-1))
+#done
+
+### task5
+
+#echo "Enter stiung to search: "
+#read str_to_search
+
+#for file in $*; do
+#  echo "$(grep $str_to_search $file | wc -l) lines in $file containes $str_to_search"
+#done
+
+### task 6
+#read message
+
+#for user in $*; do
+#  if who | grep -q "$user"; then
+#    echo $message | write $user
+#  fi
+#done
+
+### task 7
+#if test -d $1; then
+#  for filename in $1/*; do
+#    if test -f $filename; then
+#      if [ $(wc -c < $filename) -gt $2 ]; then
+#        echo $filename
+#      fi
+#    fi
+#  done
+#fi
+
+### task 8
+#case $1
+#in
+#  koki) echo "String koki";;
+#  koki2) echo "Koki2!!!";;
+#esac
+
+### taks 9
+str1="hello"
+str2="hello"
+
+if [ "$str1" = "$str2" ]; then
+  echo "Equals"
+else
+  echo "Different"
+fi
